@@ -32,8 +32,7 @@ class App extends React.Component {
     });
   }
 
-  async entryBtnClick(e) {
-    e.preventDefault();
+  async entryBtnClick() {
     const { username } = this.state;
     this.setState({ loading: true });
     await createUser({ name: username });
@@ -43,16 +42,13 @@ class App extends React.Component {
   render() {
     const { loading, btnDisabled, username } = this.state;
     return (
-      <>
-        <p>TrybeTunes</p>
-        <Routes
-          entryClick={ this.entryBtnClick }
-          loading={ loading }
-          username={ username }
-          btnIsDisabled={ btnDisabled }
-          handleStats={ this.handleBtn }
-        />
-      </>
+      <Routes
+        entryClick={ this.entryBtnClick }
+        loading={ loading }
+        username={ username }
+        btnIsDisabled={ btnDisabled }
+        handleStats={ this.handleBtn }
+      />
     );
   }
 }
