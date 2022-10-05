@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from '../pages/Loading';
 
 class MusicCard extends React.Component {
@@ -9,21 +9,41 @@ class MusicCard extends React.Component {
     this.state = {
       loading: false,
       check: false,
-      favoriteMusics: [],
+      favorites: [],
     };
     this.favoriteClick = this.favoriteClick.bind(this);
+    this.getFavoriteMusic = this.getFavoriteMusic.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
+  }
+
+  componentDidMount() {
+    this.getFavoriteMusic();
+  }
+
+  handleCheck() {
+    const { musicObj } = this.props;
+    const { favorites } = this.state;
+    const isFavorite = favorites.some((obj) => musicObj.trackId === obj.id);
+    this.setState({ check: isFavorite });
+  }
+
+  async getFavoriteMusic() {
+    const favorited = await getFavoriteSongs();
+    this.setState({
+      favorites: favorited,
+    }, () => this.handleCheck());
   }
 
   async favoriteClick({ target }) {
     const { checked } = target;
     const { musicObj } = this.props;
-    const { favoriteMusics } = this.state;
+    const paramObj = {
+      id: musicObj.trackId,
+      checked,
+    };
     this.setState({ loading: true, check: checked });
-    const favMusic = await addSong(musicObj);
-    this.setState({
-      loading: false,
-      favoriteMusics: [...favoriteMusics, favMusic],
-    });
+    await addSong(paramObj);
+    this.setState({ loading: false });
   }
 
   render() {
@@ -41,11 +61,11 @@ class MusicCard extends React.Component {
                 {' '}
                 <code>audio</code>
               </audio>
-              <label htmlFor="favorite">
+              <label htmlFor={ `favorite-${trackId}` }>
                 <input
                   data-testid={ `checkbox-music-${trackId}` }
                   onChange={ this.favoriteClick }
-                  id="favorite"
+                  id={ `favorite-${trackId}` }
                   type="checkbox"
                   checked={ check }
                 />
@@ -62,14 +82,14 @@ MusicCard.propTypes = {
   musicName: PropTypes.string,
   preview: PropTypes.string,
   trackId: PropTypes.number,
-  musicObj: PropTypes.shape({ artistId: PropTypes.number }),
+  musicObj: PropTypes.shape({ artistId: PropTypes.number, trackId: PropTypes.number }),
 };
 
 MusicCard.defaultProps = {
   musicName: '',
   preview: '',
   trackId: 0,
-  musicObj: PropTypes.shape({ artistId: 0 }),
+  musicObj: PropTypes.shape({ artistId: 0, trackId: 0 }),
 };
 
 export default MusicCard;
