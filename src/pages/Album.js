@@ -48,12 +48,14 @@ class Album extends React.Component {
               return (
                 <MusicCard
                   key={ index }
+                  musicObj={ obj }
+                  trackId={ obj.trackId }
                   musicName={ obj.trackName }
                   preview={ obj.previewUrl }
                 />
               );
             }
-            return undefined;
+            return [];
           })}
         </div>
       </>
