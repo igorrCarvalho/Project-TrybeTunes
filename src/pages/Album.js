@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import { getFavoriteSongs, addSong } from '../services/favoriteSongsAPI';
+import Loading from './Loading';
 
 class Album extends React.Component {
   constructor() {
@@ -12,12 +14,23 @@ class Album extends React.Component {
       artistName: '',
       albumImg: '',
       albumName: '',
+      favorites: [],
+      loading: false,
     };
     this.searchMusics = this.searchMusics.bind(this);
+    this.handleLoading = this.handleLoading.bind(this);
+    this.favoriteClick = this.favoriteClick.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.searchMusics();
+    // this.setState({ loading: true });
+    const fav = await getFavoriteSongs();
+    this.setState({ loading: false, favorites: fav });
+  }
+
+  handleLoading(bool) {
+    this.setState({ loading: bool });
   }
 
   async searchMusics() {
@@ -34,29 +47,51 @@ class Album extends React.Component {
     });
   }
 
+  async favoriteClick(e) {
+    const { musics } = this.state;
+    const { name, checked } = e.target;
+    const ftrMusicObj = musics.filter((obj) => obj.trackId === Number(name));
+    const musicObj = {
+      musicName: ftrMusicObj[0].trackName,
+      musicId: ftrMusicObj[0].trackId,
+      check: checked,
+    };
+    this.setState({ loading: true });
+    await addSong(musicObj);
+    this.setState({ loading: false });
+  }
+
   render() {
-    const { musics, artistName, albumImg, albumName } = this.state;
+    const { musics, artistName, albumImg, albumName, loading, favorites } = this.state;
     return (
       <>
         <Header />
         <div data-testid="page-album">
-          <img src={ albumImg } alt="album" />
-          <h3 data-testid="album-name">{ albumName }</h3>
-          <h4 data-testid="artist-name">{ artistName }</h4>
-          { musics.map((obj, index) => {
-            if (index > 0) {
-              return (
-                <MusicCard
-                  key={ index }
-                  musicObj={ obj }
-                  trackId={ obj.trackId }
-                  musicName={ obj.trackName }
-                  preview={ obj.previewUrl }
-                />
-              );
-            }
-            return [];
-          })}
+          { loading ? <Loading />
+            : (
+              <>
+                <img src={ albumImg } alt="album" />
+                <h3 data-testid="album-name">{ albumName }</h3>
+                <h4 data-testid="artist-name">{ artistName }</h4>
+                { musics.map((obj, index) => {
+                  if (index > 0) {
+                    return (
+                      <MusicCard
+                        favorites={ favorites }
+                        click={ this.favoriteClick }
+                        loading={ this.handleLoading }
+                        key={ index }
+                        musicObj={ obj }
+                        trackId={ obj.trackId }
+                        musicName={ obj.trackName }
+                        preview={ obj.previewUrl }
+                      />
+                    );
+                  }
+                  return [];
+                })}
+              </>
+            )}
         </div>
       </>
     );
