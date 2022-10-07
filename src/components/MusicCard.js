@@ -11,16 +11,13 @@ class MusicCard extends React.Component {
       check: false,
     };
     this.handleEvent = this.handleEvent.bind(this);
-    /* this.favoriteClick = this.favoriteClick.bind(this);
-    this.getFavoriteMusic = this.getFavoriteMusic.bind(this);
-    this.handleCheck = this.handleCheck.bind(this); */
   }
 
   async componentDidMount() {
     const { musicObj } = this.props;
     const favorites = await getFavoriteSongs();
-    const savedMusic = favorites.some((obj) => obj.musicId === musicObj.trackId);
-    console.log(savedMusic);
+    const savedMusic = favorites
+      .some((obj) => obj.trackId === musicObj.trackId);
     if (savedMusic) this.setState({ check: savedMusic });
   }
 
@@ -32,44 +29,6 @@ class MusicCard extends React.Component {
     this.setState({ check: checked, loading: false });
   }
 
-  /*  async componentDidMount() {
-    const { loading, musicObj } = this.props;
-    loading(true);
-    const favMusics = await getFavoriteSongs();
-    const isCheck = favMusics.some((obj) => obj.trackId === musicObj.trackId);
-    this.setState({ check: isCheck });
-    loading(false);
-  }
-
-  handleCheck() {
-    const { musicObj } = this.props;
-    const { favorites } = this.state;
-    const isFavorite = favorites.some((obj) => musicObj.trackId === obj.id);
-    this.setState({ check: isFavorite });
-  }
-
-  async getFavoriteMusic() {
-    const favorited = await getFavoriteSongs();
-    this.setState({
-      favorites: favorited,
-    }, () => this.handleCheck());
-  }
-
-  async favoriteAdd() {
-    const { musicObj, loading } = this.props;
-    const { check } = this.state;
-    if (check) {
-      loading(true);
-      await addSong(musicObj);
-      loading(false);
-    }
-  }
-
-  favoriteClick({ target }) {
-    const { checked } = target;
-    this.setState({ check: checked }, () => this.favoriteAdd());
-  }
- */
   render() {
     const { loading, check } = this.state;
     const { musicName, preview, trackId } = this.props;

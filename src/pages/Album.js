@@ -18,19 +18,14 @@ class Album extends React.Component {
       loading: false,
     };
     this.searchMusics = this.searchMusics.bind(this);
-    this.handleLoading = this.handleLoading.bind(this);
     this.favoriteClick = this.favoriteClick.bind(this);
   }
 
   async componentDidMount() {
     this.searchMusics();
-    // this.setState({ loading: true });
+    this.setState({ loading: true });
     const fav = await getFavoriteSongs();
     this.setState({ loading: false, favorites: fav });
-  }
-
-  handleLoading(bool) {
-    this.setState({ loading: bool });
   }
 
   async searchMusics() {
@@ -52,8 +47,8 @@ class Album extends React.Component {
     const { name, checked } = e.target;
     const ftrMusicObj = musics.filter((obj) => obj.trackId === Number(name));
     const musicObj = {
-      musicName: ftrMusicObj[0].trackName,
-      musicId: ftrMusicObj[0].trackId,
+      trackName: ftrMusicObj[0].trackName,
+      trackId: ftrMusicObj[0].trackId,
       check: checked,
     };
     await addSong(musicObj);
