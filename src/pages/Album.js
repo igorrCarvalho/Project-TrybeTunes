@@ -56,9 +56,7 @@ class Album extends React.Component {
       musicId: ftrMusicObj[0].trackId,
       check: checked,
     };
-    this.setState({ loading: true });
     await addSong(musicObj);
-    this.setState({ loading: false });
   }
 
   render() {
