@@ -47,6 +47,7 @@ class Album extends React.Component {
     const { name, checked } = e.target;
     const ftrMusicObj = musics.filter((obj) => obj.trackId === Number(name));
     const musicObj = {
+      musicUrl: ftrMusicObj[0].previewUrl,
       trackName: ftrMusicObj[0].trackName,
       trackId: ftrMusicObj[0].trackId,
       check: checked,
