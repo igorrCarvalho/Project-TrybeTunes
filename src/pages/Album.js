@@ -50,6 +50,8 @@ class Album extends React.Component {
       trackName: ftrMusicObj[0].trackName,
       trackId: ftrMusicObj[0].trackId,
       check: checked,
+      artistName: ftrMusicObj[0].artistName,
+      artworkUrl100: ftrMusicObj[0].artworkUrl100,
     };
     await addSong(musicObj);
   }

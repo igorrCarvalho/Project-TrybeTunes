@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../pages/Loading';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 class MusicCard extends React.Component {
   constructor() {
@@ -22,11 +22,20 @@ class MusicCard extends React.Component {
   }
 
   async handleEvent(e) {
+    const { musicObj } = this.props;
     const { click } = this.props;
     const { checked } = e.target;
-    this.setState({ loading: true });
-    await click(e);
-    this.setState({ check: checked, loading: false });
+    if (!checked) {
+      this.setState({ loading: true });
+      await removeSong(musicObj);
+      this.setState({ loading: false, check: checked });
+    }
+    if (checked) {
+      console.log('oi');
+      this.setState({ loading: true });
+      await click(e);
+      this.setState({ check: checked, loading: false });
+    }
   }
 
   render() {
