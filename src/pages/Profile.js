@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { getUser } from '../services/userAPI';
 import Loading from './Loading';
@@ -45,12 +46,11 @@ class Profile extends React.Component {
                   />
                 </div>
                 <div>
-                  <button
-                    onClick={ this.btnProfileClick }
-                    type="button"
+                  <Link
+                    to="/profile/edit"
                   >
                     Editar perfil
-                  </button>
+                  </Link>
                 </div>
                 <div>
                   <h3>Nome</h3>
