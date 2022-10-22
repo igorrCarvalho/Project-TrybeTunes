@@ -32,17 +32,22 @@ class FavMusicCard extends React.Component {
     } = this.props;
     const { loading, check } = this.state;
     return (
-      loading ? <Loading /> : (
-        <div>
-          <img src={ artworkUrl100 } alt={ trackName } />
-          <h4>{ trackName }</h4>
-          <audio data-testid="audio-component" src={ musicUrl } controls>
+      loading ? <Loading id="loadingFavIcon" /> : (
+        <div className="favoritesMusicsDiv">
+          <img className="favoritesMusicsImg" src={ artworkUrl100 } alt={ trackName } />
+          <h4 className="favoriteTitle">{ trackName }</h4>
+          <audio
+            className="favoriteMusicAudio"
+            data-testid="audio-component"
+            src={ musicUrl }
+            controls
+          >
             <track kind="captions" />
             O seu navegador não suporta o elemento
             {' '}
             <code>audio</code>
           </audio>
-          <label htmlFor={ `favorite-${trackId}` }>
+          <label className="inputFavRemove" htmlFor={ `favorite-${trackId}` }>
             <input
               id={ `favorite-${trackId}` }
               name={ `${trackId}` }
@@ -50,7 +55,7 @@ class FavMusicCard extends React.Component {
               type="checkbox"
               checked={ check }
             />
-            Favorita
+            Favorite
           </label>
         </div>
       )

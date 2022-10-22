@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
 import { createUser } from '../services/userAPI';
+import logo from './figmaLogo.png';
+import randomUser from '../randomUser.png';
 
 const STATE = {
   btnDisabled: true,
@@ -37,7 +39,7 @@ class Login extends React.Component {
     const { history } = this.props;
     const { username } = this.state;
     this.setState({ loading: true });
-    await createUser({ name: username });
+    await createUser({ name: username, image: randomUser });
     this.setState({ loading: false });
     history.push('/search');
   }
@@ -49,11 +51,12 @@ class Login extends React.Component {
       loading,
     } = this.state;
     return (
-      <div data-testid="page-login">
-        { loading ? <Loading />
+      <div className="loginDiv" data-testid="page-login">
+        <img id="figmaLogo" src={ logo } alt="logo" />
+        { loading ? <Loading id="loginLoading" />
           : (
             <form>
-              <label htmlFor="username">
+              <label id="labelInput" htmlFor="username">
                 Nome
                 <input
                   id="username"
@@ -64,6 +67,7 @@ class Login extends React.Component {
                 />
               </label>
               <button
+                id="enterBtn"
                 onClick={ this.entryBtnClick }
                 disabled={ btnDisabled }
                 data-testid="login-submit-button"

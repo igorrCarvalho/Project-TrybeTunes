@@ -42,12 +42,19 @@ class MusicCard extends React.Component {
     const { loading, check } = this.state;
     const { musicName, preview, trackId } = this.props;
     return (
-      <div>
-        { loading ? <Loading />
+      <div className="musicPreviewDiv">
+        { loading ? <Loading id="musicPageLoading" />
           : (
             <>
-              <h4>{ musicName }</h4>
-              <audio data-testid="audio-component" src={ preview } controls>
+              <div className="musicNameDiv">
+                <h4>{ musicName }</h4>
+              </div>
+              <audio
+                className="musicPreview"
+                data-testid="audio-component"
+                src={ preview }
+                controls
+              >
                 <track kind="captions" />
                 O seu navegador não suporta o elemento
                 {' '}

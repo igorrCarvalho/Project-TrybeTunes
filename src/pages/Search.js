@@ -48,44 +48,49 @@ class Search extends React.Component {
     return (
       <>
         <Header />
-        <div data-testid="page-search">
+        <div id="searchDiv" className="mainDiv" data-testid="page-search">
           { loading ? <Loading />
             : (
-              <form>
-                <input
-                  data-testid="search-artist-input"
-                  type="text"
-                  placeholder="Nome do Artista..."
-                  value={ searchTxt }
-                  onChange={ this.handleInput }
-                />
-                <button
-                  disabled={ btndisabled }
-                  type="submit"
-                  data-testid="search-artist-button"
-                  onClick={ this.onBtnClick }
-                >
-                  Pesquisar
-                </button>
-              </form>
+              <div>
+                <form>
+                  <input
+                    id="searchArtistInput"
+                    data-testid="search-artist-input"
+                    type="text"
+                    placeholder="Nome do Artista..."
+                    value={ searchTxt }
+                    onChange={ this.handleInput }
+                  />
+                  <button
+                    id="btnToSearchArtist"
+                    disabled={ btndisabled }
+                    type="submit"
+                    data-testid="search-artist-button"
+                    onClick={ this.onBtnClick }
+                  >
+                    Pesquisar
+                  </button>
+                </form>
+                <h3 id="searchResult">{ `Resultado de álbuns de: ${searched}` }</h3>
+              </div>
             ) }
-          <h3>{ `Resultado de álbuns de: ${searched}` }</h3>
+        </div>
+        <div id="musicsDiv">
           { (req && albums.length === 0) ? <h3>Nenhum álbum foi encontrado</h3>
             : (
               albums.map((obj, index) => (
-                <Link
-                  key={ index }
-                  to={ `/album/${obj.collectionId}` }
-                  data-testid={ `link-to-album-${obj.collectionId}` }
-                >
-                  <div>
-                    <img src={ obj.artworkUrl100 } alt="album" />
-                    <div>
-                      <h3>{ obj.collectionName }</h3>
-                      <h4>{ `Artista: ${obj.artistName}` }</h4>
+                <div key={ index } className="music">
+                  <Link
+                    to={ `/album/${obj.collectionId}` }
+                    data-testid={ `link-to-album-${obj.collectionId}` }
+                  >
+                    <img className="musicImg" src={ obj.artworkUrl100 } alt="album" />
+                    <div className="textDiv">
+                      <h3 className="albumName">{ obj.collectionName }</h3>
+                      <h4 className="artistName">{ `Artist: ${obj.artistName}` }</h4>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               ))) }
         </div>
       </>

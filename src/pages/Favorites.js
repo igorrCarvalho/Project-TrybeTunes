@@ -31,9 +31,11 @@ class Favorites extends React.Component {
     return (
       <>
         <Header />
-        <h3>Músicas favoritas</h3>
-        <div data-testid="page-favorites">
-          { loading ? <Loading />
+        <div id="favoritesMusicsTitleDiv">
+          <h1 id="favoritesMusicsTitle">Favorites Musics</h1>
+        </div>
+        <div className="teste" data-testid="page-favorites">
+          { loading ? <Loading id="favoritePageLoading" />
             : (
               favSongs.map((obj) => (
                 <FavMusicCard

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { getUser, updateUser } from '../services/userAPI';
 import Loading from './Loading';
@@ -65,66 +64,69 @@ class ProfileEdit extends React.Component {
     return (
       <>
         <Header />
-        <div data-testid="page-profile-edit">
+        <div id="profileEditHeader"><h1 id="profileEditTitle">Edit your profile</h1></div>
+        <div id="profileEditDiv" data-testid="page-profile-edit">
           { loading ? <Loading />
             : (
               <>
-                <label htmlFor="img">
-                  Imagem
-                  <input
-                    data-testid="edit-input-image"
-                    id="img"
-                    onChange={ this.handleInput }
-                    name="image"
-                    type="text"
-                    value={ image }
-                  />
-                </label>
-                <img src={ image } alt="Sem imagem atual" />
-                <label htmlFor="name">
-                  Nome
-                  <input
-                    data-testid="edit-input-name"
-                    id="name"
-                    onChange={ this.handleInput }
-                    type="text"
-                    name="name"
-                    value={ name }
-                  />
-                </label>
-                <label htmlFor="email">
-                  Email
-                  <input
-                    data-testid="edit-input-email"
-                    id="email"
-                    onChange={ this.handleInput }
-                    name="email"
-                    type="text"
-                    value={ email }
-                  />
-                </label>
-                <label htmlFor="desc">
-                  Description
-                  <textarea
-                    data-testid="edit-input-description"
-                    id="desc"
-                    onChange={ this.handleInput }
-                    name="description"
-                    type="text"
-                    value={ description }
-                  />
-                </label>
-                <button
-                  disabled={ btnDisabled }
-                  type="button"
-                  data-testid="edit-button-save"
-                  onClick={ this.onBtnClick }
-                >
-                  Salvar
-                </button>
+                <img id="profileEditImg" src={ image } alt="Sem imagem atual" />
+                <div id="formEditDiv">
+                  <label htmlFor="img">
+                    Imagem
+                    <input
+                      data-testid="edit-input-image"
+                      id="img"
+                      onChange={ this.handleInput }
+                      name="image"
+                      type="text"
+                      value={ image }
+                    />
+                  </label>
+                  <label htmlFor="name">
+                    Nome
+                    <input
+                      data-testid="edit-input-name"
+                      id="name"
+                      onChange={ this.handleInput }
+                      type="text"
+                      name="name"
+                      value={ name }
+                    />
+                  </label>
+                  <label htmlFor="email">
+                    Email
+                    <input
+                      data-testid="edit-input-email"
+                      id="email"
+                      onChange={ this.handleInput }
+                      name="email"
+                      type="text"
+                      value={ email }
+                    />
+                  </label>
+                  <label htmlFor="desc">
+                    Description
+                    <textarea
+                      data-testid="edit-input-description"
+                      id="desc"
+                      onChange={ this.handleInput }
+                      name="description"
+                      type="text"
+                      value={ description }
+                    />
+                  </label>
+                  <button
+                    id="formEditSend"
+                    disabled={ btnDisabled }
+                    type="button"
+                    data-testid="edit-button-save"
+                    onClick={ this.onBtnClick }
+                  >
+                    Save changes
+                  </button>
+                </div>
               </>
             )}
-          <Link to="/profile/edit">Editar perfil</Link>
         </div>
       </>
     );

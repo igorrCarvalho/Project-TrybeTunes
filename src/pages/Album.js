@@ -62,33 +62,41 @@ class Album extends React.Component {
     return (
       <>
         <Header />
-        <div data-testid="page-album">
-          { loading ? <Loading />
-            : (
-              <>
-                <img src={ albumImg } alt="album" />
-                <h3 data-testid="album-name">{ albumName }</h3>
-                <h4 data-testid="artist-name">{ artistName }</h4>
-                { musics.map((obj, index) => {
-                  if (index > 0) {
-                    return (
-                      <MusicCard
-                        favorites={ favorites }
-                        click={ this.favoriteClick }
-                        loading={ this.handleLoading }
-                        key={ index }
-                        musicObj={ obj }
-                        trackId={ obj.trackId }
-                        musicName={ obj.trackName }
-                        preview={ obj.previewUrl }
-                      />
-                    );
-                  }
-                  return [];
-                })}
-              </>
-            )}
-        </div>
+        { loading ? <Loading id="albumPageLoading" />
+          : (
+            <>
+              <div id="initialDiv">
+                <div id="detailDiv">
+                  <img id="collectionImg" src={ albumImg } alt="album" />
+                  <div id="textCollectionDiv">
+                    <h3 id="collectionName" data-testid="album-name">{ albumName }</h3>
+                    <h4 data-testid="artist-name">{ artistName }</h4>
+                  </div>
+                </div>
+              </div>
+              <div id="albumDetailDiv" data-testid="page-album">
+                <div id="detailMusicsDiv">
+                  { musics.map((obj, index) => {
+                    if (index > 0) {
+                      return (
+                        <MusicCard
+                          favorites={ favorites }
+                          click={ this.favoriteClick }
+                          loading={ this.handleLoading }
+                          key={ index }
+                          musicObj={ obj }
+                          trackId={ obj.trackId }
+                          musicName={ obj.trackName }
+                          preview={ obj.previewUrl }
+                        />
+                      );
+                    }
+                    return [];
+                  })}
+                </div>
+              </div>
+            </>
+          )}
       </>
     );
   }
