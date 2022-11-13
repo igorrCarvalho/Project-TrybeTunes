@@ -1,6 +1,6 @@
 # Welcome to the project trybeTunes repositorie!
 
-This project simulates an music website (like spotify). It uses an apple music API to search te music data. The user can listen to various music previews, add music to the favorites page, login and customize your profile. The favorite musics stay saved using WebStorage. <br />
+This project simulates an music website (like spotify). It uses an apple music API to search te music data. The user can listen to various music previews, add music to the favorites page, login and customize your profile. The favorite musics stay saved using WebStorage. <br /><br />
 ![ezgif com-gif-maker (8)](https://user-images.githubusercontent.com/64559670/201538958-e0d3307a-5fb3-4ee9-a4b5-69fa1588f127.gif)
 
 # Development
